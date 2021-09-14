@@ -1,0 +1,30 @@
+<div class="container" style="margin-top: 120px">
+  <div class="card">
+      <div class="card-body">
+          <span class="h3 fuente-finger">Listado de Categorias</span>
+          <button class="btn btn-primary btn-lg float-right" routerLink="/create-category" *ngIf="isAdmin">Agregar</button>
+          <h5 style="margin-top: 30px;" *ngIf="categories.length == 0">No hay datos para mostrar</h5>
+          <table *ngIf="categories.length > 0" class="table table-striped mt-5">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Name</th>
+                  <th *ngIf="isAdmin">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let category of categories | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+                  <td>{{ category.id }}</td>
+                  <td>{{ category.name }}</td>
+                  <td *ngIf="isAdmin">
+                    <i style="cursor: pointer" class="fas fa-edit fa-lg text-info mr-2" [routerLink]="['/editCategory/', category.id]"></i>
+                    <i style="cursor: pointer" (click)="deleteCategory(category.id)" class="fas fa-trash-alt fa-lg text-danger"></i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+        <ngb-pagination style="position: absolute; left: 36%; z-index: 30; top: 2%;"
+                        [collectionSize]="100" [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>
+      </div>
+  </div>
+</div>

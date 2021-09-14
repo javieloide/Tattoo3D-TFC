@@ -1,0 +1,87 @@
+<div class="container" style="margin-top: 200px" id="htmlData">
+  <div class="card" *ngIf="!isAdmin; else Admin">
+    <div class="card-body">
+      <span class="h1 fuente-finger">Pedidos</span><br>
+      <h5 style="margin-top: 30px;" *ngIf="piercingsCart.length == 0">No hay pedidos para mostrar</h5>
+      <br><br>
+      <div *ngFor="let order of piercingsCart; let i=index">
+        <div (click)="mostrarTabla(order.id, order.userId)" style="cursor: pointer; background: goldenrod"><h3>{{order.date | date:'dd/MM/YYYY'}}</h3></div>
+        <table *ngIf="piercingsCart.length > 0" class="table table-striped mt-5" id="{{order.id}}" style="display: none">
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Name</th>
+              <th>Material</th>
+              <th>Area</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody id="contenido">
+            <tr *ngFor="let piercing of order.products">
+              <td>
+                <img [src]="piercing.image ? piercing.image : 'assets/bootstrap.png'" width="150" height="150">
+              </td>
+              <td style="line-height: 9;">{{ piercing.name }}</td>
+              <td style="line-height: 9;">{{ piercing.material }}</td>
+              <td style="line-height: 9;">{{ piercing.body_area }}</td>
+              <td style="line-height: 9;">{{ piercing.price | currency}}</td>
+            </tr>
+            <tr>
+              <th class="text-right" style="font-size: 25px">Precio total: {{calcularTotalOrder(order)|currency}}</th>
+              <td>
+                <button class="btn btn-primary" *ngIf="piercingsCart.length" (click)="confirmOrder(order)">Imprimir pedido</button>
+                <button class="btn btn-danger" style="margin-left: 5px" *ngIf="piercingsCart.length" (click)="deleteOrder(order.id)">Eliminar pedido</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <br><br>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #Admin>
+    <div class="card">
+      <div class="card-body">
+        <span class="h1 fuente-finger">Pedidos</span><br>
+        <h5 style="margin-top: 30px;" *ngIf="piercingsCart.length == 0">No hay pedidos para mostrar</h5>
+        <br><br>
+        <div *ngFor="let order of piercingsCart; let i=index">
+          <div (click)="mostrarTabla(order.id, order.userId)" style="cursor: pointer; background: goldenrod">
+            <h3>{{order.date | date:'dd/MM/YYYY'}}<i style="cursor: pointer; margin-left: 10px" (click)="deleteOrder(order.id)" class="fas fa-check-circle fa-lg text-success"></i></h3>
+          </div>
+          <span id="{{order.userId}}" style="display: none; font-size: 25px">User: {{order.userId}}</span>
+          <table *ngIf="piercingsCart.length > 0" class="table table-striped mt-5" id="{{order.id}}" style="display: none">
+            <thead>
+            <tr>
+              <th>Image</th>
+              <th>Name</th>
+              <th>Material</th>
+              <th>Area</th>
+              <th>Price</th>
+            </tr>
+            </thead>
+            <tbody id="contenido">
+            <tr *ngFor="let piercing of order.products">
+              <td>
+                <img [src]="piercing.image ? piercing.image : 'assets/bootstrap.png'" width="150" height="150">
+              </td>
+              <td style="line-height: 9;">{{ piercing.name }}</td>
+              <td style="line-height: 9;">{{ piercing.material }}</td>
+              <td style="line-height: 9;">{{ piercing.body_area }}</td>
+              <td style="line-height: 9;">{{ piercing.price | currency}}</td>
+            </tr>
+            <tr>
+              <th class="text-right" style="font-size: 25px">Precio total: {{calcularTotalOrder(order)|currency}}</th>
+              <td>
+                <button class="btn btn-success" style="margin-left: 5px" *ngIf="piercingsCart.length" (click)="deleteOrder(order.id)">Confirmar pedido</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+          <br><br>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>

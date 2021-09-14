@@ -1,0 +1,37 @@
+<div class="wrapper fadeInDown" style="margin-top: 200px;">
+  <div id="formContent">
+    <!-- Icon -->
+    <div class="fadeIn first">
+      <img src="assets/user.png" style="width: 150px;"id="icon" alt="User Icon" />
+      <h3 class="fuente-finger">Login</h3>
+    </div>
+    <!-- Login Form -->
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+      <div class="alert-danger">
+      <div *ngIf="data_required" class="container-error-message">{{data_required}}</div>
+      </div>
+      <input type="email" id="login" class="fadeIn second" name="email" placeholder="email" formControlName="email">
+      <div class="alert-danger" *ngIf="(email.invalid && (email.touched || email.dirty))">
+        <div class="container-error-message" *ngIf="email.errors.required ;else emailControl">
+          The email its required.
+        </div>
+        <ng-template #emailControl>
+          <div class="container-error-message" *ngIf="email.errors.email">
+            The email has to be valid.
+          </div>
+        </ng-template>
+      </div>
+      <input type="password" id="password" class="fadeIn third" name="password" placeholder="password" formControlName="password">
+      <div class="alert-danger" *ngIf="(password.invalid && (password.touched || password.dirty))">
+        <div class="container-error-message" *ngIf="password.errors.required">
+          The password its required
+        </div>
+      </div>
+      <input type="submit" class="fadeIn fourth" value="Log In">
+    </form>
+    <!-- Remind Passowrd -->
+    <div id="formFooter">
+      <p>Create an account  <a class="underlineHover" [routerLink]="['/register']">Register</a></p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,68 @@
+<div class="container" style="margin-top: 200px">
+  <div class="card" *ngIf="!isAdmin else Admin">
+    <div class="card-body">
+      <span class="h3 fuente-finger">Listado de Citas de Tatuajes</span>
+      <h5 style="margin-top: 30px;" *ngIf="requestsTattoos.length == 0">No hay datos para mostrar</h5>
+      <table *ngIf="requestsTattoos.length > 0" class="table table-striped mt-5">
+        <thead>
+        <tr>
+          <th>Date</th>
+          <th>Hour</th>
+          <th>Image</th>
+          <th>Price</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let requestTattoo of requestsTattoos | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+          <td style="line-height: 9;">{{ requestTattoo.date }}</td>
+          <td style="line-height: 9;">{{ requestTattoo.hour }}</td>
+          <td><img [src]="requestTattoo.photo" width="150" height="150"></td>
+          <td style="line-height: 9;">{{ requestTattoo.price | currency }}</td>
+          <td style="line-height: 9;">
+            <i style="cursor: pointer" (click)="deleteRequestTattoo(requestTattoo.id)" class="fas fa-trash-alt fa-lg text-danger"></i>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <ngb-pagination style="position: absolute; left: 36%; z-index: 30; top: 2%;"
+                      [collectionSize]="100" [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>
+
+    </div>
+  </div>
+  <ng-template #Admin>
+    <div class="card">
+      <div class="card-body">
+        <span class="h3 fuente-finger">Listado de Citas de Tatuajes</span>
+        <h5 style="margin-top: 30px;" *ngIf="requestsTattoos.length == 0">No hay datos para mostrar</h5>
+        <table *ngIf="requestsTattoos.length > 0" class="table table-striped mt-5">
+          <thead>
+          <tr>
+            <th>User</th>
+            <th>Date</th>
+            <th>Hour</th>
+            <th>Image</th>
+            <th>Price</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let requestTattoo of requestsTattoos | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+            <td style="line-height: 9;">{{ requestTattoo.idUser }}</td>
+            <td style="line-height: 9;">{{ requestTattoo.date }}</td>
+            <td style="line-height: 9;">{{ requestTattoo.hour }}</td>
+            <td><img [src]="requestTattoo.photo" width="150" height="150"></td>
+            <td style="line-height: 9;">{{ requestTattoo.price | currency }}</td>
+            <td style="line-height: 9;">
+              <i style="cursor: pointer" (click)="deleteRequestTattoo(requestTattoo.id)" class="fas fa-check-circle fa-lg text-primary"></i>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <ngb-pagination style="position: absolute; left: 36%; z-index: 30; top: 2%;"
+                        [collectionSize]="100" [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>
+
+      </div>
+    </div>
+  </ng-template>
+</div>

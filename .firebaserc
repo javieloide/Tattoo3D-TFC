@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "tatto3d-2c482": {
+      "hosting": {
+        "Tatto3d": [
+          "tatto3d-2c482"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "tatto3d-2c482"
+  }
+}

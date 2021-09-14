@@ -1,0 +1,70 @@
+<div class="container piercings">
+  <div class="card" *ngIf="isAdmin; else client" style="margin-top: 120px;">
+      <div class="card-body">
+          <span class="h3 fuente-finger">Listado de Piercings</span>
+          <button class="btn btn-primary btn-lg float-right" routerLink="/create-piercing">Agregar</button>
+          <h5 style="margin-top: 30px;" *ngIf="piercings.length == 0">No hay datos para mostrar</h5>
+          <table *ngIf="piercings.length > 0" class="table table-striped mt-5">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Image</th>
+                  <th>Name</th>
+                  <th>Material</th>
+                  <th>Area</th>
+                  <th>Price</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let piercing of piercings | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+                  <td style="line-height: 9;">{{ piercing.id }}</td>
+                  <td>
+                    <img [src]="piercing.image ? piercing.image : 'assets/bootstrap.png'" width="150" height="150">
+                  </td>
+                  <td style="line-height: 9;">{{ piercing.name }}</td>
+                  <td style="line-height: 9;">{{ piercing.material }}</td>
+                  <td style="line-height: 9;">{{ piercing.body_area }}</td>
+                  <td style="line-height: 9;">{{ piercing.price | currency}}</td>
+                  <td style="line-height: 9;">
+                    <i style="cursor: pointer" class="fas fa-edit fa-lg text-info mr-2" [routerLink]="['/editPiercing/', piercing.id]"></i>
+                    <i style="cursor: pointer" (click)="deletePiercing(piercing.id)" class="fas fa-trash-alt fa-lg text-danger"></i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+           <ngb-pagination style="position: absolute; left: 36%; z-index: 30; top: 2%;"
+                           [collectionSize]="100" [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>
+
+      </div>
+
+  </div>
+  <ng-template #client>
+    <div *ngIf="cartPiercings.length" class="card-columns">
+      <div class="card" *ngFor="let piercing of cartPiercings">
+        <img class="card-img-top" [src]="piercing.image ? piercing.image : 'assets/bootstrap.png'" width="150" height="250">
+        <div class="card-body">
+          <p class="card-text">{{piercing.price}}€</p>
+        </div>
+      </div>
+      <button class="btn btn-primary" (click)="addOrder()">Realizar pedido</button>
+    </div>
+    <h1 class="fuente-finger">Nuestros Piercings</h1>
+    <h5 style="margin-top: 30px;" *ngIf="piercings.length == 0">No hay datos para mostrar</h5>
+    <div class="form-group">
+      <input type="text" class="form-control" placeholder="Search..." name="filterPiercing" [(ngModel)]="filterPiercing">
+    </div>
+    <div class="card-columns">
+      <div class="card" style="text-align: center" *ngFor="let piercing of piercings | filterName:filterPiercing">
+        <img class="card-img-top" [src]="piercing.image ? piercing.image : 'assets/bootstrap.png'" width="150" height="250">
+        <div class="card-body">
+          <h4 class="card-title">{{piercing.name}}</h4>
+          <p class="card-text">{{piercing.material}}</p>
+          <p class="card-text">{{piercing.price}}€</p>
+          <button class="btn btn-primary" *ngIf="logged" (click)="addCart(piercing)">Pedir</button>
+        </div>
+      </div>
+    </div>
+
+  </ng-template>
+</div>

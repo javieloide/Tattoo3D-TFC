@@ -1,0 +1,61 @@
+<div class="container tattoos">
+  <div class="card" *ngIf="isAdmin; else client" style="margin-top: 120px">
+      <div class="card-body">
+          <span class="h3 fuente-finger">Listado de Tattoos</span>
+          <button class="btn btn-primary btn-lg float-right" routerLink="/create-tattoo" *ngIf="isAdmin">Agregar</button>
+          <h5 style="margin-top: 30px;" *ngIf="tattoos.length == 0">No hay datos para mostrar</h5>
+          <table *ngIf="tattoos.length > 0" class="table table-striped mt-5">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Image</th>
+                  <th>Name</th>
+                  <th>Size</th>
+                  <th>Color</th>
+                  <th>Category</th>
+                  <th>Price</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let tattoo of tattoos | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+                  <td style="line-height: 9;">{{ tattoo.id }}</td>
+                  <td>
+                    <img [src]="tattoo.image ? tattoo.image : 'assets/bootstrap.png'" width="150" height="150">
+                  </td>
+                  <td style="line-height: 9;">{{ tattoo.name }}</td>
+                  <td style="line-height: 9;">{{ tattoo.size }}</td>
+                  <td style="line-height: 9;">{{ tattoo.has_color }}</td>
+                  <td style="line-height: 9;">{{ tattoo.category }}</td>
+                  <td style="line-height: 9;">{{ tattoo.price | currency}}</td>
+                  <td style="line-height: 9;">
+                    <i style="cursor: pointer" class="fas fa-edit fa-lg text-info mr-2" [routerLink]="['/editTattoo/', tattoo.id]"></i>
+                    <i style="cursor: pointer" (click)="deleteTattoo(tattoo.id)" class="fas fa-trash-alt fa-lg text-danger"></i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+        <ngb-pagination style="position: absolute; left: 36%; z-index: 30; top: 2%;"
+                        [collectionSize]="100" [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>
+
+      </div>
+  </div>
+  <ng-template #client>
+    <h1 class="fuente-finger">Nuestros Tatuajes</h1>
+    <h5 style="margin-top: 30px;" *ngIf="tattoos.length == 0">No hay datos para mostrar</h5>
+    <div class="form-group">
+      <input type="text" class="form-control" placeholder="Search..." name="filterTattoo" [(ngModel)]="filterTattoo">
+    </div>
+    <div class="card-columns">
+    <div class="card" style="text-align: center" *ngFor="let tattoo of tattoos | filterName:filterTattoo">
+      <img class="card-img-top" [src]="tattoo.image ? tattoo.image : 'assets/bootstrap.png'" width="150" height="250">
+      <div class="card-body">
+        <h4 class="card-title">{{tattoo.name}}</h4>
+        <p class="card-text">{{tattoo.category}}</p>
+        <p class="card-text">{{tattoo.price}}€</p>
+        <a [routerLink]="['/request-tattoo/', tattoo.id]" class="btn btn-primary" *ngIf="logged">Encargar</a>
+      </div>
+    </div>
+    </div>
+  </ng-template>
+</div>

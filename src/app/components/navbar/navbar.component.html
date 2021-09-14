@@ -1,0 +1,90 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#"><img src="assets/logo3.png" height="70" width="100"></a>
+  <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation" wfd-id="621">
+    <span class="navbar-toggler-icon" wfd-id="445"></span>
+  </button>
+
+  <div class="navbar-collapse collapse" id="navbarColor01" wfd-id="444">
+    <ul class="navbar-nav mr-auto" wfd-id="624">
+        <li class="nav-item" wfd-id="629" *ngIf="!isAdmin; else noAdmin2">
+        <a class="nav-link" style="cursor: pointer" (click)="toTattos()">Tattoos</a>
+      </li>
+      <ng-template #noAdmin2>
+        <li class="nav-item" wfd-id="629">
+          <a class="nav-link" style="cursor: pointer" routerLink="/list-tattoos">Tattoos</a>
+        </li>
+      </ng-template>
+      <li class="nav-item" wfd-id="629" *ngIf="!isAdmin; else noAdmin">
+        <a class="nav-link" style="cursor: pointer" (click)="toPiercings()">Piercings</a>
+      </li>
+      <ng-template #noAdmin>
+        <li class="nav-item" wfd-id="629">
+          <a class="nav-link" style="cursor: pointer" routerLink="/list-piercings">Piercings</a>
+        </li>
+      </ng-template>
+      <li class="nav-item" wfd-id="628">
+        <a class="nav-link" *ngIf="!isAdmin" style="cursor: pointer" (click)="toLocation()">Location</a>
+      </li>
+      <li class="nav-item" wfd-id="628">
+        <a class="nav-link" *ngIf="isAdmin" style="cursor: pointer" [routerLink]="['/location/', idLocation]">Location</a>
+      </li>
+      <li class="nav-item" wfd-id="628">
+        <a class="nav-link" *ngIf="!isAdmin" style="cursor: pointer" (click)="toAbout()">About</a>
+      </li>
+
+      <li class="nav-item" wfd-id="628">
+        <a class="nav-link" *ngIf="isAdmin" routerLink="/list-categories">Categories</a>
+      </li>
+      <li class="nav-item" wfd-id="628">
+        <a class="nav-link" *ngIf="isAdmin" routerLink="/list-users">Users</a>
+      </li>
+      <li class="nav-item" wfd-id="628">
+        <a class="nav-link" routerLink="/threejs">Tattoo Perry</a>
+      </li>
+      <li>
+      <li class="nav-item" wfd-id="628">
+        <a class="nav-link" *ngIf="isAdmin" routerLink="/list-employees">Employees</a>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav ml-auto" *ngIf="user$ | async as user; else login">
+
+      <li class="nav-item" wfd-id="628" *ngIf="user">
+        <a class="nav-link" href="#" (click)="onLogout()">Logout</a>
+      </li>
+
+      <li class="nav-item">
+        <a  style="cursor: pointer" [routerLink]="['/user-profile/', userS.id]">
+          <img *ngIf="userS.photo; else noPhoto" src="{{userS.photo}}" width="50" height="40">
+          <ng-template #noPhoto>
+            <img src="assets/user.png" width="40">
+          </ng-template>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/list-requests-tattoos">
+          <i class="far fa-calendar-check">
+          </i>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/cart" >
+          <i class="fas fa-shopping-cart">
+          </i>
+        </a>
+      </li>
+    </ul>
+
+    <ng-template #login>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item" wfd-id="628">
+          <a class="nav-link" routerLink="/login">Login</a>
+        </li>
+        <li class="nav-item" wfd-id="628">
+          <a class="nav-link" routerLink="/register">Sign Up</a>
+        </li>
+      </ul>
+    </ng-template>
+
+  </div>
+</nav>

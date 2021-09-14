@@ -1,0 +1,64 @@
+<div class="container pt-4" style="margin-top: 120px">
+  <div class="row">
+      <div class="col-lg-6 offset-lg-3">
+          <div class="card text-center">
+              <div class="card-body">
+                  <h3 class="fuente-finger">{{ titulo }}
+                      <div *ngIf="loading" class="spinner-border float-right" role="status">
+                          <span class="sr-only">Loading...</span>
+                        </div>
+                  </h3>
+                  <span *ngIf="submitted && createTattoo.invalid" class="badge badge-danger">INTRODUZCA LOS DATOS CORRECTAMENTE</span>
+                  <form class="mt-4" [formGroup]="createTattoo" (ngSubmit)="addEditTattoo()">
+
+                          <div class="form-group">
+                            <label for="image">Image</label>
+                            <input type="text" class="form-control form-control-lg" id="image" formControlName="image"
+                                  placeholder="Image">
+                          </div>
+                          <div class="form-group">
+                              <label for="name">Name</label>
+                              <input type="text" class="form-control form-control-lg" id="name" formControlName="name"
+                                  placeholder="Name">
+                          </div>
+
+                      <div class="form-group">
+                        <label for="size">Size</label>
+                        <input type="number" class="form-control form-control-lg mt-3" id="size" formControlName="size"
+                            placeholder="Size">
+                      </div>
+
+                      <div class="form-group">
+                        <label for="size">Price</label>
+                        <input type="number" class="form-control form-control-lg mt-3" id="price" formControlName="price"
+                        placeholder="Price">
+                      </div>
+
+                      <div class="form-group" wfd-id="356">
+                        <label for="exampleSelect1" wfd-id="358">Category</label>
+                        <select class="form-control" id="exampleSelect1" wfd-id="357" formControlName="category">
+                          <option *ngFor="let category of categories" value="{{category.name}}">{{category.name}}</option>
+                        </select>
+                      </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" formControlName="has_color">
+                        <label class="form-check-label" for="flexCheckDefault">
+                          Con color
+                        </label>
+                      </div>
+
+                      <br><br>
+
+
+                      <div class="mt-3">
+                          <button type="text" class="btn btn-secondary btn-lg mr-3"
+                              routerLink="/list-tattoos">Volver</button>
+                          <button type="submit" class="btn btn-primary btn-lg">{{titulo}}</button>
+                      </div>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

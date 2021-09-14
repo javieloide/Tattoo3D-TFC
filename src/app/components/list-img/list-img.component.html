@@ -1,0 +1,5 @@
+<div class="card-columns" style="margin-top: 100px; background-color: #0d0d0d;">
+  <div class="card"  *ngFor="let img of list" style="width: 100px; margin-left: 50px;">
+    <img (click)="select(img)" class="card-img-top" [src]="img" height="100">
+  </div>
+</div>

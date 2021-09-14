@@ -1,0 +1,42 @@
+<div class="wrapper fadeInDown" style="margin-top: 100px;">
+  <div id="formContent">
+    <!-- Icon -->
+    <div class="fadeIn first">
+      <img src="assets/user.png" style="width: 150px;"id="icon" alt="User Icon" />
+      <h3 class="fuente-finger">Sign Up</h3>
+    </div>
+    <!-- Login Form -->
+    <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+      <div class="alert-danger">
+        <div *ngIf="data_required" class="container-error-message">{{data_required}}</div>
+      </div>
+      <input type="email" id="login" class="fadeIn second" name="email" placeholder="email*" formControlName="email">
+      <div class="alert-danger" *ngIf="(email.invalid && (email.touched || email.dirty))">
+        <div class="container-error-message" *ngIf="email.errors.required ;else emailControl">
+          The email its required.
+        </div>
+        <ng-template #emailControl>
+          <div class="container-error-message" *ngIf="email.errors.email">
+            The email has to be valid.
+          </div>
+        </ng-template>
+      </div>
+      <input type="password" id="password" class="fadeIn third" name="password" placeholder="password*" formControlName="password">
+      <div class="alert-danger" *ngIf="(password.invalid && (password.touched || password.dirty))">
+        <div class="container-error-message" *ngIf="password.errors.required">
+          The password its required
+        </div>
+      </div>
+
+      <input type="text" id="photo" class="fadeIn third" name="photo" placeholder="photo" formControlName="photo">
+      <input type="text" id="country" class="fadeIn third" name="country" placeholder="country" formControlName="country">
+      <input type="text" id="city" class="fadeIn third" name="city" placeholder="city" formControlName="city">
+      <input type="text" id="street" class="fadeIn third" name="street" placeholder="street" formControlName="street">
+      <input type="text" id="zip_code" class="fadeIn third" name="zip_code" placeholder="zip code" formControlName="zip_code">
+      <input type="submit" class="fadeIn fourth" value="Register">
+    </form>
+    <div id="formFooter">
+      <p>Do you have an account? <a class="underlineHover" [routerLink]="['/login']">Login</a></p>
+    </div>
+  </div>
+</div>

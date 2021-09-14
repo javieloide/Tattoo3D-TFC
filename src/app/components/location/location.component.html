@@ -1,0 +1,58 @@
+<div class="container location">
+  <h1 class="fuente-finger"> Nuestra ubicación</h1><br><br>
+
+  <agm-map [latitude]="lat"
+           [longitude]="lng"
+           [zoom]="zoom"
+           [mapTypeId]="mapTypeId" *ngIf="!isAdmin; else Admin">
+    <agm-marker [latitude]="lat"
+                [longitude]="lng">
+      <agm-info-window>
+        Mi posición
+      </agm-info-window>
+    </agm-marker>
+  </agm-map>
+
+  <ng-template #Admin style="margin-top: 120px">
+    <div class="container pt-4">
+      <div class="row">
+        <div class="col-lg-6 offset-lg-3">
+          <div class="card text-center">
+            <div class="card-body">
+              <h3 class="fuente-finger">Location company
+                <div *ngIf="loading" class="spinner-border float-right" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
+              </h3>
+              <span *ngIf="locationForm.invalid" class="badge badge-danger">INTRODUZCA LOS DATOS CORRECTAMENTE</span>
+              <form class="mt-4" [formGroup]="locationForm" (ngSubmit)="editLocation()">
+
+                <div class="form-group">
+                  <label for="latitude">Latitude</label>
+                  <input type="number" class="form-control form-control-lg" id="latitude" formControlName="latitude"
+                         placeholder="Latitude">
+                </div>
+                <div class="form-group">
+                  <label for="longitude">Longitude</label>
+                  <input type="number" class="form-control form-control-lg" id="longitude" formControlName="longitude"
+                         placeholder="Longitude">
+                </div>
+
+                <br><br>
+
+
+                <div class="mt-3">
+                  <button type="text" class="btn btn-secondary btn-lg mr-3"
+                          routerLink="/home">Volver</button>
+                  <button type="submit" class="btn btn-primary btn-lg">Actualizar datos</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </ng-template>
+</div>
+
